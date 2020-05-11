@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <form method="POST" class="search">
+
+        {{ search_form.hidden_tag() }}
+
+        {{ search_form.search_cnpj_cpf.label }}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-10">
+                    {{ search_form.search_cnpj_cpf(class="cnpj_cpf form-control", autocomplete="off") }}
+                </div>
+                <div class="col-sm-2">
+                    {{ search_form.search_submit(class="btn btn-primary") }}
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="flash-msg">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% if profissional %}
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="new_epi_modal_form" action="{{ url_for('bl_epis.new_lan') }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Lançamento de N95</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ epi_form.hidden_tag() }}
+                            {{ epi_form.epi_cnpj_cpf }}
+                            {{ epi_form.epi_profissional }}
+
+                            <h4>Já existe lançamento nos últimos 15 dias</h4>
+
+                            {{ epi_form.epi_observacao.label }}
+                            <div class="form-group">
+                                {{ epi_form.epi_observacao(class="form-control") }}
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            {{ epi_form.epi_submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
