@@ -7,6 +7,7 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 class Config:
 
+    FLASK_ENV = os.environ.get('FLASK_ENV')
     SECRET_KEY = os.environ.get('KEY')
 
     # Database
@@ -14,5 +15,5 @@ class Config:
     SQLALCHEMY_BINDS = {
         'sgh': os.environ.get('SGH_DATABASE_URI')
     }
-    SQLALCHEMY_ECHO = os.environ.get('SQLALCHEMY_ECHO')
-    SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
+    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
